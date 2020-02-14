@@ -6,17 +6,22 @@ const Statistics = ({stats}) => {
     if (all > 0) {
         average = (stats.good - stats.bad)/all
         positive = (stats.good * 100 / all)
-    }  
-    return (
-        <>
-            <p>good {stats.good}</p>
-            <p>neutral {stats.neutral}</p>
-            <p>bad {stats.bad}</p>
-            <p>all {all}</p>
-            <p>average {average}</p>
-            <p>positive {positive}%</p>
-        </>
-    )
+        return (
+            <>
+                <p>good {stats.good}</p>
+                <p>neutral {stats.neutral}</p>
+                <p>bad {stats.bad}</p>
+                <p>all {all}</p>
+                <p>average {average}</p>
+                <p>positive {positive}%</p>
+            </>
+        )
+    }  else {
+        return (
+            <p>No feedback given</p>
+        )
+    }
+    
 }
 
 export default Statistics
