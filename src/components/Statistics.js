@@ -5,17 +5,19 @@ const Statistics = ({stats}) => {
     const all = stats.good + stats.neutral + stats.bad
     let average=0, positive=0
     if (all > 0) {
-        average = (stats.good - stats.bad)/all
-        positive = (stats.good * 100 / all)
+        average = ((stats.good - stats.bad)/all).toFixed(1)        
+        positive = (stats.good * 100 / all).toFixed(1)
         return (
-            <>
-                <StatDisplay label="good" value={stats.good} />
-                <StatDisplay label="neutral" value={stats.neutral} />
-                <StatDisplay label="bad" value={stats.bad} />
-                <StatDisplay label="all" value={all} />
-                <StatDisplay label="average" value={average} />
-                <StatDisplay label="positive" value={positive + "%"} />
-            </>
+            <table>
+                <tbody>
+                    <StatDisplay label="good" value={stats.good} />
+                    <StatDisplay label="neutral" value={stats.neutral} />
+                    <StatDisplay label="bad" value={stats.bad} />
+                    <StatDisplay label="all" value={all} />
+                    <StatDisplay label="average" value={average} />
+                    <StatDisplay label="positive" value={positive + "%"} />
+                </tbody>
+            </table>
         )
     }  else {
         return (
