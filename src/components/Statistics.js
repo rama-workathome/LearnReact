@@ -1,4 +1,5 @@
 import React from 'react'
+import StatDisplay from './StatDisplay'
 
 const Statistics = ({stats}) => {
     const all = stats.good + stats.neutral + stats.bad
@@ -8,12 +9,12 @@ const Statistics = ({stats}) => {
         positive = (stats.good * 100 / all)
         return (
             <>
-                <p>good {stats.good}</p>
-                <p>neutral {stats.neutral}</p>
-                <p>bad {stats.bad}</p>
-                <p>all {all}</p>
-                <p>average {average}</p>
-                <p>positive {positive}%</p>
+                <StatDisplay label="good" value={stats.good} />
+                <StatDisplay label="neutral" value={stats.neutral} />
+                <StatDisplay label="bad" value={stats.bad} />
+                <StatDisplay label="all" value={all} />
+                <StatDisplay label="average" value={average} />
+                <StatDisplay label="positive" value={positive + "%"} />
             </>
         )
     }  else {
