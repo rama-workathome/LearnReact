@@ -1,12 +1,5 @@
 import React from 'react'
 
-const Person = ({persons}) => {
-
-    return (
-        <div>
-        {persons.map(p=><p key={p.name}>{p.name}</p>)}
-        </div>
-    )
-}
+const Person = ({person}) => <p>{person.name}</p>
 
 export default Person
