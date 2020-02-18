@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Person from './components/Person'
 import Message from './components/Message'
+import Header from './components/Header'
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -12,6 +13,7 @@ const App = () => {
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ message, setMessage ] = useState('')
+  const [ filter, setFilter ] = useState('')
 
   const addName = (e) => {
     e.preventDefault()
@@ -41,23 +43,32 @@ const App = () => {
     setNewNumber(e.target.value)
   }
 
+  const updateFilter = (e) => {
+    e.preventDefault()
+    setFilter(e.target.value)
+  }
+
   return (
     <div>
-      <h2>Phonebook</h2>
+      <Header title="Phonebook" />
       <Message message={message} />
+        <p>
+          filter shown with <input value={filter} onChange={updateFilter} />
+        </p>
+      <Header title="add new" />
       <form onSubmit={addName}>
-        <div>
+        <p>
           name: <input value={newName} onChange={updateName}/>
-        </div>
-        <div>
+        </p>
+        <p>
           number: <input value={newNumber} onChange={updateNumber}/>
-        </div>
-        <div>
+        </p>
+        <p>
           <button type="submit">add</button>
-        </div>
+        </p>
       </form>
-      <h2>Numbers</h2>
-      {persons.map(person=><Person key={person.name} person={person} />)}
+      <Header title="Numbers" />
+      <Person persons={persons} filter={filter} />
     </div>
   )
 }

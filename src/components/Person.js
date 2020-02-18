@@ -1,5 +1,11 @@
 import React from 'react'
 
-const Person = ({person}) => <p>{person.name} {person.number}</p>
+const Person = ({persons, filter}) =>{
+    const f = filter.toLowerCase()
+    const t = persons.filter(person =>person.name.toLowerCase().indexOf(f) !== -1)
+    return (
+        t.map(p=><p key={p.name}>{p.name} {p.number}</p>)
+    )
+}
 
 export default Person
