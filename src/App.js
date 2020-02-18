@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Person from './components/Person'
 import Message from './components/Message'
 import Header from './components/Header'
+import Filter from './components/Filter'
+import Form from './components/Form'
+
 
 const App = () => {
   const [ persons, setPersons] = useState([
@@ -10,63 +13,42 @@ const App = () => {
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
-  const [ newName, setNewName ] = useState('')
-  const [ newNumber, setNewNumber ] = useState('')
+  const [ newPerson, setNewPerson ] = useState({name: '', number: ''})
   const [ message, setMessage ] = useState('')
   const [ filter, setFilter ] = useState('')
 
   const addName = (e) => {
     e.preventDefault()
     const personsCopy = [...persons]
-    const nameObject = {
-      name: newName,
-      number: newNumber
-    }
-    if (persons.findIndex(element => element.name === newName) >= 0) {
-      setMessage(newName + ' already exists in the list')
+    const nameObject = {...newPerson}
+    if (persons.findIndex(element => element.name === newPerson.name) >= 0) {
+      setMessage(newPerson.name + ' already exists in the list')
     } else {
       personsCopy.push(nameObject)
       setPersons(personsCopy)
-      setNewName('')
-      setNewNumber('')
+      setNewPerson({name: '', number: ''})
+      setMessage('')
     }
-  } 
-
-  const updateName = (e) => {
-    e.preventDefault()
-    setNewName(e.target.value)
-    setMessage('')
   }
-
-  const updateNumber = (e) => {
-    e.preventDefault()
-    setNewNumber(e.target.value)
+  
+  
+  const update = (e, type) => {
+    const temp = {...newPerson}
+    temp[type]=e.target.value
+    setNewPerson(temp)
   }
 
   const updateFilter = (e) => {
-    e.preventDefault()
-    setFilter(e.target.value)
+    setFilter(e)
   }
 
   return (
     <div>
       <Header title="Phonebook" />
       <Message message={message} />
-        <p>
-          filter shown with <input value={filter} onChange={updateFilter} />
-        </p>
+      <Filter v={filter} c={updateFilter} />
       <Header title="add new" />
-      <form onSubmit={addName}>
-        <p>
-          name: <input value={newName} onChange={updateName}/>
-        </p>
-        <p>
-          number: <input value={newNumber} onChange={updateNumber}/>
-        </p>
-        <p>
-          <button type="submit">add</button>
-        </p>
-      </form>
+      <Form submit={addName} data={newPerson} change={update}/>      
       <Header title="Numbers" />
       <Person persons={persons} filter={filter} />
     </div>
