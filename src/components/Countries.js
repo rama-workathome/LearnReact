@@ -13,7 +13,6 @@ const Countries = ({data, filter}) =>{
         )
     } else if (t.length === 1) {
         const single = t[0]
-        console.log(t)
         return (
             <div>
                 <h2>{single.name}</h2>
