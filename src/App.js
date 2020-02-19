@@ -14,7 +14,7 @@ const App = () => {
 
   const hookEffect = () => {
     axios
-      .get('https://restcountries.eu/rest/v2/all')
+      .get('https://restcountries.eu/rest/v2/all?fields=name;capital;languages;flag;population')
       .then(response=> {
         setData(response.data)
         

@@ -5,11 +5,11 @@ const Countries = ({data, filter}) =>{
     const t = data.filter(country =>country.name.toLowerCase().indexOf(f) !== -1)
     if (t.length > 10) {
         return (
-            <p>Too many coutries to show</p>
+            <p>Too many coutries to show. Start typing to filter.</p>
         )
     } else if (t.length > 1 && t.length <= 10) {
         return (
-            t.map(p=><p key={p.numericCode}>{p.name}</p>)
+            t.map(p=><p key={p.name}>{p.name}</p>)
         )
     } else if (t.length === 1) {
         const single = t[0]
@@ -20,14 +20,14 @@ const Countries = ({data, filter}) =>{
                 <p>population: {single.population}</p>
                 <h3>languages</h3>
                 <ul>
-                {single.languages.map(s=> <li key={single.name}>{s.name}</li>)}
+                {single.languages.map(s=> <li key={s.name}>{s.name}</li>)}
                 </ul>
                 <p><img src={single.flag} alt={single.name + ' flag'} width="200" border="1" /></p>
             </div>
         )
     } else {
         return (
-            <p>Nothing to show. Start typing to filter.</p>
+            <p>Nothing to show. Type something else.</p>
         )
     }   
 }
