@@ -7,14 +7,18 @@ import Form from './components/Form'
 
 
 const App = () => {
+  
   const [ persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
     { name: 'Ada Lovelace', number: '39-44-5323523' },
     { name: 'Dan Abramov', number: '12-43-234345' },
     { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
+  
   const [ newPerson, setNewPerson ] = useState({name: '', number: ''})
+  
   const [ message, setMessage ] = useState('')
+  
   const [ filter, setFilter ] = useState('')
 
   const addName = (e) => {
@@ -30,7 +34,6 @@ const App = () => {
       setMessage('')
     }
   }
-  
   
   const update = (e, type) => {
     const temp = {...newPerson}
