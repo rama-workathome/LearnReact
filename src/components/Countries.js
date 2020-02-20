@@ -1,35 +1,27 @@
 import React from 'react'
+import Country from './Country'
 
-const Countries = ({data, filter}) =>{
-    const f = filter.toLowerCase()
-    const t = data.filter(country =>country.name.toLowerCase().indexOf(f) !== -1)
-    if (t.length > 10) {
-        return (
-            <p>Too many coutries to show. Start typing to filter.</p>
-        )
-    } else if (t.length > 1 && t.length <= 10) {
-        return (
-            t.map(p=><p key={p.name}>{p.name}</p>)
-        )
-    } else if (t.length === 1) {
-        const single = t[0]
-        return (
-            <div>
-                <h2>{single.name}</h2>
-                <p>capital: {single.capital}</p>
-                <p>population: {single.population}</p>
-                <h3>languages</h3>
-                <ul>
-                {single.languages.map(s=> <li key={s.name}>{s.name}</li>)}
-                </ul>
-                <p><img src={single.flag} alt={single.name + ' flag'} width="200" border="1" /></p>
-            </div>
-        )
+const Countries = ({data, filter, buttonhandler, current}) =>{
+    const f = filter.toLowerCase().trim()
+    const t = data.filter(c =>c.name.toLowerCase().indexOf(f) !== -1)
+
+    if (current === null) {
+        if (t.length > 10) {
+            return <p>Too many coutries to show. Start typing to filter.</p>
+        } else if (t.length > 1 && t.length <= 10) {
+            return (
+                <div>
+                     {t.map(country => <div key={country.name}><span>{country.name}</span> <button onClick={buttonhandler} country={country.alpha3Code}>Show</button></div>) }
+                </div>
+            )
+        } else if (t.length === 1) {
+            return <Country value={t[0]} />
+        } else {
+            return <p>Nothing to show. Type something else.</p>
+        }    
     } else {
-        return (
-            <p>Nothing to show. Type something else.</p>
-        )
-    }   
+        return <Country value={current} />
+    }    
 }
 
 export default Countries
