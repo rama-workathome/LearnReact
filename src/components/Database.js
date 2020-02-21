@@ -10,7 +10,12 @@ const putData = (person) => {
     return axios.post(url, person)
 }
 
+const removeData = (id) => {
+    return axios.delete(url + '/' + id)
+
+}
 export default {
     getData: getData, 
-    putData: putData
+    putData: putData,
+    removeData: removeData
 }

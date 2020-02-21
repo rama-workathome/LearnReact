@@ -10,7 +10,7 @@ const App = () => {
   
   const [ persons, setPersons] = useState([]) 
   
-  const [ newPerson, setNewPerson ] = useState({name: '', number: ''})
+  const [ newPerson, setNewPerson ] = useState({name: '', number: '', id: ''})
   
   const [ message, setMessage ] = useState('')
   
@@ -21,22 +21,34 @@ const App = () => {
     if (persons.findIndex(element => element.name === newPerson.name) >= 0) {
       setMessage(newPerson.name + ' already exists in the list')
     } else {
-      console.log(newPerson)
-      
+      //newPerson.id = persons.length + 1
       DB.putData(newPerson).then(response=>{
         if(response.status === 201) {
           getPhones()
-          setNewPerson({name: '', number: ''})
+          setNewPerson({name: '', number: '', id: ''})
           setMessage('')
         } else {
           setMessage(response.statusText)
         }        
-      })
-      
-        
+      })       
     }    
   }
-  //console.log(DB.getData)
+
+  const deleteName = (e) => {
+    const id = e.target.attributes.id.value
+    const name= e.target.attributes.name.value
+    if (window.confirm('Are you sure you want to delete ' + name + '?')) {
+      DB.removeData(id).then(response=>{
+        if(response.status === 200) {
+          getPhones()
+          setMessage('Deleted ' + name + '. Status: ' + response.statusText)
+        } else {
+          setMessage('Error: ' + response.statusText)
+        }
+      })
+    }
+  }
+
   const update = (e, type) => {
     const temp = {...newPerson}
     temp[type]=e.target.value
@@ -49,7 +61,6 @@ const App = () => {
 
   const getPhones = () => {
     DB.getData().then(response=>{
-      console.log(response.data)
       setPersons(response.data)
     })
   }
@@ -64,7 +75,7 @@ const App = () => {
       <Header title="add new" />
       <Form submit={addName} data={newPerson} change={update}/>      
       <Header title="Numbers" />
-      <Person persons={persons} filter={filter} />
+      <Person persons={persons} filter={filter} deleteHandler={deleteName} />
     </div>
   )
 }
