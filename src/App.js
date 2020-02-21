@@ -18,16 +18,18 @@ const App = () => {
 
   const addName = (e) => {
     e.preventDefault()
-    const personsCopy = [...persons]
-    const nameObject = {...newPerson}
     if (persons.findIndex(element => element.name === newPerson.name) >= 0) {
       setMessage(newPerson.name + ' already exists in the list')
     } else {
-      personsCopy.push(nameObject)
-      setPersons(personsCopy)
-      setNewPerson({name: '', number: ''})
-      setMessage('')
-    }
+      axios
+        .post('http://localhost:3001/persons', newPerson)
+        .then(response => {
+          console.log(response)
+          getPhones()
+          setNewPerson({name: '', number: ''})
+          setMessage('')
+        })
+    }    
   }
   
   const update = (e, type) => {
@@ -40,14 +42,15 @@ const App = () => {
     setFilter(e)
   }
 
-  const hookEffect = () => {
+  const getPhones = () => {
     axios
       .get('http://localhost:3001/persons')
       .then(response=>{
         setPersons(response.data)
       })
   }
-  useEffect(hookEffect, [])
+
+  useEffect(getPhones, [])
 
   return (
     <div>
