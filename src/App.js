@@ -4,7 +4,7 @@ import Message from './components/Message'
 import Header from './components/Header'
 import Filter from './components/Filter'
 import Form from './components/Form'
-import axios from 'axios'
+import DB from './components/Database'
 
 const App = () => {
   
@@ -21,17 +21,22 @@ const App = () => {
     if (persons.findIndex(element => element.name === newPerson.name) >= 0) {
       setMessage(newPerson.name + ' already exists in the list')
     } else {
-      axios
-        .post('http://localhost:3001/persons', newPerson)
-        .then(response => {
-          console.log(response)
+      console.log(newPerson)
+      
+      DB.putData(newPerson).then(response=>{
+        if(response.status === 201) {
           getPhones()
           setNewPerson({name: '', number: ''})
           setMessage('')
-        })
+        } else {
+          setMessage(response.statusText)
+        }        
+      })
+      
+        
     }    
   }
-  
+  //console.log(DB.getData)
   const update = (e, type) => {
     const temp = {...newPerson}
     temp[type]=e.target.value
@@ -43,11 +48,10 @@ const App = () => {
   }
 
   const getPhones = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response=>{
-        setPersons(response.data)
-      })
+    DB.getData().then(response=>{
+      console.log(response.data)
+      setPersons(response.data)
+    })
   }
 
   useEffect(getPhones, [])
