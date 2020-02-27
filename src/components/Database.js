@@ -12,10 +12,15 @@ const putData = (person) => {
 
 const removeData = (id) => {
     return axios.delete(url + '/' + id)
-
 }
+
+const updateData = (id, person) => {
+    return axios.put(url + '/' + id, person)
+}
+
 export default {
     getData: getData, 
     putData: putData,
-    removeData: removeData
+    removeData: removeData,
+    updateData: updateData
 }

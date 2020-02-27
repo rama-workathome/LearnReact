@@ -18,8 +18,15 @@ const App = () => {
 
   const addName = (e) => {
     e.preventDefault()
-    if (persons.findIndex(element => element.name === newPerson.name) >= 0) {
-      setMessage(newPerson.name + ' already exists in the list')
+    const a = persons.findIndex(element => element.name === newPerson.name)
+    if (a >= 0) {
+      if (window.confirm(newPerson.name + ' already exists in the table. Do you wish to update the phone number?')) {
+        DB.updateData(persons[a].id, newPerson).then(response=> {
+          setMessage(`phone number for ${newPerson.name} has been updated to ${newPerson.number}`)
+          getPhones()
+          setNewPerson({name: '', number: '', id: ''})          
+        })        
+      }
     } else {
       //newPerson.id = persons.length + 1
       DB.putData(newPerson).then(response=>{
